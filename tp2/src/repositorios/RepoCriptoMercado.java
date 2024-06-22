@@ -28,12 +28,29 @@ public class RepoCriptoMercado {
 	}
 	
 	
-	public void modificar(String antSimbolo,String newSimbolo) {
+	public void modificarSimbolo(String antSimbolo,String newSimbolo) {
 		
 		int indiceMercado = buscarXsimboloMercado(antSimbolo);
 		
 		listCriptoMercado.get(indiceMercado).setVariacion7Dias(newSimbolo);
 	}
+	
+public ArrayList<CriptoMercado> getListCriptoMercado() {
+		return listCriptoMercado;
+	}
+public CriptoMercado getCriptoMercadoIndice(int ind) {
+	return listCriptoMercado.get(ind);
+}
+
+public void modificar(String antSimbolo,CriptoMercado cmer) {
+		
+		int indiceMercado = buscarXsimboloMercado(antSimbolo);
+		
+		listCriptoMercado.set(indiceMercado, cmer);
+	}
+	
+	
+	
 	
 	public int buscarXsimboloMercado(String simbolo) {
 
@@ -46,6 +63,12 @@ public class RepoCriptoMercado {
 		return -1;
 	}
 	
+	public CriptoMercado getCriptoMercadoXsimbolo(String simbolo) {
+		return listCriptoMercado.get(buscarXsimboloMercado(simbolo));
+	}
+
+
+
 	public void eliminar(String simbolo) {
 		
 		listCriptoMercado.remove(buscarXsimboloMercado( simbolo));
@@ -55,11 +78,7 @@ public class RepoCriptoMercado {
 	}
 	
 	
-	public CriptoMercado getCriptoMercado(String simbolo) {
-		return listCriptoMercado.get(buscarXsimboloMercado( simbolo));
-		
-		
-	}
+
 	
 	
 }

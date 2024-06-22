@@ -18,4 +18,37 @@ public class RepoHistoricoUser {
 		
 	}
 	
+	
+	
+	public boolean actualizar(String simbolo, int cantidad) {
+		
+		int ind = buscarIndicexSimbolo(simbolo);
+		if (ind == -1) {
+
+			listHistUser.add(new HistoricoUser(simbolo, cantidad));
+		} else {
+			HistoricoUser hAnt = listHistUser.get(ind);
+			hAnt.setCantidad(hAnt.getCantidad() + cantidad);
+			listHistUser.set(ind, hAnt);
+		}
+		
+		
+		return true;
+	}
+	
+	
+	
+	public int buscarIndicexSimbolo(String simbolo) {
+
+		for (HistoricoUser hu : listHistUser) {
+			if (hu.getSimbolo().equals(simbolo))
+
+				return listHistUser.indexOf(hu);
+		}
+
+		return -1;
+	}
+	
+	
+	
 }

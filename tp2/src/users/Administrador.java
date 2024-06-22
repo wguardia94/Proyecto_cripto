@@ -57,24 +57,25 @@ public class Administrador extends User {
 	}
 
 	@Override
-	public boolean comprarCripto(int indice, ArrayList<CriptoMercado> listCripMercado,
-			ArrayList<CriptoMoneda> listCripMoneda, double cantidad) {
+	public boolean comprarCripto(int indice, RepoCriptoMercado repoCripMerc, RepoCriptoMoneda repoCripMoneda,
+			int cantidad) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean vender(int cantDisp, int cantVender, int indice, ArrayList<CriptoMercado> listCripMercado,
-			ArrayList<CriptoMoneda> listCripMoneda) {
+	public boolean vender(int cantDisp, int cantVender, int indice, RepoCriptoMercado recoCmerc,
+			RepoCriptoMoneda repoCmon) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public String obtenerRecomendacion(ArrayList<CriptoMercado> listCripMercado,
-			ArrayList<CriptoMoneda> listCripMoneda) {
+	public String obtenerRecomendacion(RepoCriptoMercado repoCmerc, RepoCriptoMoneda repoCmon) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 }

@@ -39,134 +39,52 @@ public class Trader extends User {
 		listHistoricoTran.add(new HistoricoTransaccion("DOGE", "Venta", 14));
 	}
 
-	
-	
-	
-	
-	public boolean comprarCripto(int indice, ArrayList<CriptoMercado> listCripMercado,
-			ArrayList<CriptoMoneda> listCripMoneda, double cantidad) {
-		CriptoMoneda cm = listCripMoneda.get(indice);
+	public boolean comprarCripto(int indice, RepoCriptoMercado repoCripMerc, RepoCriptoMoneda repoCripMoneda,
+			int cantidad) {
 
-		int indMer = buscarXsimboloMercado(listCripMercado, cm.getSimbolo());
-		CriptoMercado cMer = listCripMercado.get(indMer);
-		cMer.setCapacidad(cMer.getCapacidad() - cantidad);
+		CriptoMoneda cmAnt = repoCripMoneda.getCriptoMonedaXindice(indice);
+		repoCripMoneda.realizarCompra(repoCripMerc, cantidad, indice);
+		setSaldo(getSaldo() - cantidad * cmAnt.getPrecioBase());
 
-		double antVal = aDouble(cMer.getVariacion7Dias());
-		cMer.setVariacion7Dias("+" + antVal * 1.05 + "%");
-		antVal = aDouble(cMer.getVolumen24Hs());
-		cMer.setVolumen24Hs("+" + antVal * 1.05 + "%");
-		listCripMercado.set(indMer, cMer);
+		/// actualizarHistorico
 
-		//// cambiar archivp mercado
-
-		setSaldo(getSaldo() - cantidad * cm.getPrecioBase());
-		if (cantidad > 1000) {
-			antVal = cm.getPrecioBase();
-			cm.setPrecioBase(antVal * 1.1);
-			listCripMoneda.set(indice, cm);
-
-			// cambiar archivo cripto
-
-		}
+		repoHistUser.actualizar(cmAnt.getSimbolo(), cantidad);
+		repoHistTr.actualizar(new HistoricoTransaccion(cmAnt.getSimbolo(), "Compra", cantidad));
 
 		return true;
 	}
 
-	public boolean vender(int cantDisp, int cantVender, int indice, ArrayList<CriptoMercado> listCripMercado,
-			ArrayList<CriptoMoneda> listCripMoneda) {
+	public boolean vender(int cantDisp, int cantVender, int indice, RepoCriptoMercado recoCmerc,
+			RepoCriptoMoneda repoCmon) {
+		CriptoMoneda aux = repoCmon.getCriptoMonedaXindice(indice);
+		repoCmon.realizarVenta(cantDisp, cantVender, indice, recoCmerc);
 
-		if (cantDisp < cantVender)
-			return false;
+		setSaldo(getSaldo() + cantVender + aux.getPrecioBase());
 
-		int indiceMercado = buscarXsimboloMercado(listCripMercado, listHistorico.get(indice).getSimbolo());
-		CriptoMercado aux = listCripMercado.get(indiceMercado);
-		aux.setCapacidad(aux.getCapacidad() + cantVender);
-		double auxDouble = aDouble(aux.getVariacion7Dias());
-		String auxStr = "+" + auxDouble * 0.93 + "%";
-		aux.setVariacion7Dias(auxStr);
-		auxDouble = aDouble(aux.getVolumen24Hs());
-		auxStr = auxDouble * 0.93 + "%";
-		aux.setVolumen24Hs(auxStr);
-		listCripMercado.set(indiceMercado, aux);
-
-		setSaldo(getSaldo() + cantVender + listCripMoneda.get(indice).getPrecioBase());
-
-		actualizarHistorico(aux.getSimbolo(), -cantVender);
-		actualizarHistTran(new HistoricoTransaccion(aux.getSimbolo(), "Venta", cantVender));
+		repoHistUser.actualizar(aux.getSimbolo(), -cantVender);
+		repoHistTr.actualizar(new HistoricoTransaccion(aux.getSimbolo(), "Venta", cantVender));
 
 		//// actualizar archivos
 
 		return true;
 	}
 
-	public void actualizarHistTran(HistoricoTransaccion newHt) {
-		listHistoricoTran.add(newHt);
+	public String obtenerRecomendacion(RepoCriptoMercado repoCmerc, RepoCriptoMoneda repoCmon) {
 
-	}
-
-	public void actualizarHistorico(String simbolo, int cantidad) {
-
-		int ind = buscarHistorico(simbolo);
-		if (ind == -1) {
-
-			listHistorico.add(new HistoricoUser(simbolo, cantidad));
-		} else {
-			HistoricoUser hAnt = listHistorico.get(ind);
-			hAnt.setCantidad(hAnt.getCantidad() + cantidad);
-			listHistorico.set(ind, hAnt);
-		}
-
-		//// actualizar archivo historico
-
-	}
-
-	public String obtenerRecomendacion(ArrayList<CriptoMercado> listCripMercado,
-			ArrayList<CriptoMoneda> listCripMoneda) {
-		ArrayList<CriptoMoneda> aux = new ArrayList<CriptoMoneda>(listCripMoneda);
-		aux.sort(new CompararXvalor());
-
-		CriptoMoneda cm = aux.get(0);
-		return "Recomendacion: " + cm.getNombre();
+		return "Recomendacion: " + repoCmon.darRecomendacion(repoCmerc).getNombre();
 
 	}
 
 	public ArrayList<HistoricoTransaccion> consultarHistorico() {
 
-		ArrayList<HistoricoTransaccion> aux = new ArrayList<HistoricoTransaccion>(listHistoricoTran);
-
-		aux.sort(new CompararTransacciones());
-
-		return aux;
-
-	}
-
-	public int buscarHistorico(String simbolo) {
-
-		for (HistoricoUser hu : listHistorico) {
-			if (hu.getSimbolo().equals(simbolo))
-
-				return listHistorico.indexOf(hu);
-		}
-
-		return -1;
-	}
-
-	public double aDouble(String str) {
-
-		return Double.parseDouble(str.replaceAll("[+%]", ""));
+		
+		 return repoHistTr.consultarHistorico();
+		
+		
 
 	}
 
-	public int buscarXsimboloMercado(ArrayList<CriptoMercado> listMercado, String simbolo) {
 
-		for (CriptoMercado cm : listMercado) {
-			if (cm.getSimbolo().equals(simbolo))
-
-				return listMercado.indexOf(cm);
-		}
-
-		return -1;
-	}
 
 	public int getNroCtaBancaria() {
 		return nroCtaBancaria;
