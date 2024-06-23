@@ -18,36 +18,36 @@ public class Administrador extends User {
 	}
 
 	@Override
-	public boolean darAlta(RepoCriptoMoneda repoCm,RepoCriptoMercado repoCmerc,
-			CriptoMoneda criptoMoneda) {
+	public boolean darAlta(RepoCriptoMoneda repoCm, RepoCriptoMercado repoCmerc, CriptoMoneda criptoMoneda) {
 
-	return repoCm.agregarCriptoMoneda(criptoMoneda, repoCmerc);
+		return repoCm.agregarCriptoMoneda(criptoMoneda, repoCmerc);
 	}
 
-
-
-	
-
 	@Override
-	public boolean modificarCripto(RepoCriptoMercado repoCmerc, RepoCriptoMoneda repoCmoneda,
-			CriptoMoneda criptoMoneda, int indice) {
+	public boolean modificarCripto(RepoCriptoMercado repoCmerc, RepoCriptoMoneda repoCmoneda, CriptoMoneda criptoMoneda,
+			int indice) {
 		return repoCmoneda.modificarCripto(repoCmerc, criptoMoneda, indice);
 	}
 
 	@Override
-	public boolean eliminarCripto(RepoCriptoMercado repoCripMer,
-			 RepoCriptoMoneda repoCmon,int indice) {
-		return  repoCmon.eliminarCripto(repoCripMer, indice);
+	public boolean eliminarCripto(RepoCriptoMercado repoCripMer, RepoCriptoMoneda repoCmon, int indice) {
+		return repoCmon.eliminarCripto(repoCripMer, indice);
 	}
 
 	@Override
-	public String consultarCripto(int indice, RepoCriptoMercado repoCripMer,
-			 RepoCriptoMoneda repoCmon) {
-		
-		
-		
+	public String consultarCripto(int indice, RepoCriptoMercado repoCripMer, RepoCriptoMoneda repoCmon) {
+
 		return repoCmon.infoCripto(indice, repoCripMer);
-	
+
+	}
+
+	public void verMercadoActual(RepoCriptoMercado repoCripMer) {
+
+		for (CriptoMercado cMerc : repoCripMer.getListCriptoMercado()) {
+
+			System.out.println(cMerc);
+		}
+
 	}
 
 	@Override
@@ -75,7 +75,5 @@ public class Administrador extends User {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
 
 }

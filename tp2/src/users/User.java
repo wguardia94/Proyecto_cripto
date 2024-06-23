@@ -29,7 +29,7 @@ public abstract class User {
 	public abstract boolean eliminarCripto(RepoCriptoMercado repoCripMer, RepoCriptoMoneda repoCmon, int indice);
 
 	public abstract String consultarCripto(int indice, RepoCriptoMercado repoCripMer, RepoCriptoMoneda repoCmon);
-
+	public abstract void verMercadoActual(RepoCriptoMercado repoCripMer);
 	public abstract ArrayList<HistoricoTransaccion> consultarHistorico();
 
 	public abstract boolean comprarCripto(int indice, RepoCriptoMercado repoCripMerc, RepoCriptoMoneda repoCripMoneda,

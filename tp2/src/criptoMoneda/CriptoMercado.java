@@ -2,6 +2,11 @@ package criptoMoneda;
 
 public class CriptoMercado {
 
+	@Override
+	public String toString() {
+		return "[simbolo=" + simbolo + ", capacidad=" + capacidad + ", volumen24Hs=" + volumen24Hs
+				+ ", variacion7Dias=" + variacion7Dias + "]";
+	}
 	private String simbolo;
 	private double capacidad;
 	private String volumen24Hs;

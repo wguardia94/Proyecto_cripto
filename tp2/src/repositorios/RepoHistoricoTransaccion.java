@@ -30,6 +30,11 @@ public class RepoHistoricoTransaccion {
 
 		aux.sort(new CompararTransacciones());
 
+		for(HistoricoTransaccion ht:aux) {
+			System.out.println(ht);
+		}
+		
+		
 		return aux;
 
 	}

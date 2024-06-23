@@ -51,6 +51,7 @@ public class Trader extends User {
 		repoHistUser.actualizar(cmAnt.getSimbolo(), cantidad);
 		repoHistTr.actualizar(new HistoricoTransaccion(cmAnt.getSimbolo(), "Compra", cantidad));
 
+		
 		return true;
 	}
 
@@ -59,7 +60,7 @@ public class Trader extends User {
 		CriptoMoneda aux = repoCmon.getCriptoMonedaXindice(indice);
 		repoCmon.realizarVenta(cantDisp, cantVender, indice, recoCmerc);
 
-		setSaldo(getSaldo() + cantVender + aux.getPrecioBase());
+		setSaldo(getSaldo() + cantVender *aux.getPrecioBase());
 
 		repoHistUser.actualizar(aux.getSimbolo(), -cantVender);
 		repoHistTr.actualizar(new HistoricoTransaccion(aux.getSimbolo(), "Venta", cantVender));
@@ -131,8 +132,20 @@ public class Trader extends User {
 
 	@Override
 	public String consultarCripto(int indice, RepoCriptoMercado repoCripMer, RepoCriptoMoneda repoCmon) {
-		// TODO Auto-generated method stub
-		return null;
+		
+
+			return repoCmon.infoCripto(indice, repoCripMer);
+
+		
+	}
+
+	@Override
+	public void verMercadoActual(RepoCriptoMercado repoCripMer) {
+		for (CriptoMercado cMerc : repoCripMer.getListCriptoMercado()) {
+
+			System.out.println(cMerc);
+		}
+		
 	}
 
 }

@@ -11,8 +11,8 @@ public class RepoCriptoMercado {
 
 	public RepoCriptoMercado() {
 		listCriptoMercado=new ArrayList<CriptoMercado>();
-		CriptoMercado cmer1=new CriptoMercado("BTC", 300, "+30%", "+10%");
-		CriptoMercado cmer2=new CriptoMercado("ETH", 400, "+20%", "+30%");
+		CriptoMercado cmer1=new CriptoMercado("BTC", 300, "30%", "+10%");
+		CriptoMercado cmer2=new CriptoMercado("ETH", 400, "20%", "+30%");
 		
 		listCriptoMercado.add(cmer1);
 		listCriptoMercado.add(cmer2);
@@ -32,7 +32,7 @@ public class RepoCriptoMercado {
 		
 		int indiceMercado = buscarXsimboloMercado(antSimbolo);
 		
-		listCriptoMercado.get(indiceMercado).setVariacion7Dias(newSimbolo);
+		listCriptoMercado.get(indiceMercado).setSimbolo(newSimbolo);
 	}
 	
 public ArrayList<CriptoMercado> getListCriptoMercado() {
