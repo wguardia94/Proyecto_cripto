@@ -141,7 +141,7 @@ System.out.println("nueva en lista"+listCriptoMoneda.get(indice));
 	
 	public CriptoMoneda darRecomendacion(RepoCriptoMercado repoCmerc) {
 					ArrayList<CriptoMoneda> aux = new ArrayList<CriptoMoneda>(listCriptoMoneda);
-			aux.sort(new CompararXvalor());
+			aux.sort(new CompararXvalor(repoCmerc.getListCriptoMercado()));
 
 			
 			return aux.get(0);

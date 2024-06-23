@@ -50,8 +50,8 @@ RepoCriptoMoneda repoM=new RepoCriptoMoneda();
 		/*usuario=listUsers.get(2) ;
 		usuario.verMercadoActual(repoMerc);
 		*/
-		usuario.vender(30, 10, 0, repoMerc, repoM);
-		usuario.consultarHistorico();
+	//	usuario.vender(30, 10, 0, repoMerc, repoM);
+	//	usuario.consultarHistorico();
 		System.out.println(usuario.obtenerRecomendacion(repoMerc, repoM));
 	}
 
