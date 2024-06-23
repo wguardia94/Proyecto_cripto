@@ -1,5 +1,6 @@
 package users;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import comparadores.CompararTransacciones;
@@ -18,8 +19,8 @@ public class Trader extends User {
 	public int nroCtaBancaria;
 	public String nombreBanco;
 	public double saldo;
-	public ArrayList<HistoricoUser> listHistorico = new ArrayList<HistoricoUser>();
-	public ArrayList<HistoricoTransaccion> listHistoricoTran = new ArrayList<HistoricoTransaccion>();
+//	public ArrayList<HistoricoUser> listHistorico = new ArrayList<HistoricoUser>();
+	//public ArrayList<HistoricoTransaccion> listHistoricoTran = new ArrayList<HistoricoTransaccion>();
 	public RepoHistoricoUser repoHistUser;
 	public RepoHistoricoTransaccion repoHistTr;
 
@@ -32,13 +33,21 @@ public class Trader extends User {
 		repoHistTr = new RepoHistoricoTransaccion();
 		repoHistUser = new RepoHistoricoUser();
 
-		listHistorico.add(new HistoricoUser("BTC", 30));
+	/*	listHistorico.add(new HistoricoUser("BTC", 30));
 
 		listHistoricoTran.add(new HistoricoTransaccion("BTC", "Compra", 45));
 		listHistoricoTran.add(new HistoricoTransaccion("BTC", "Venta", 15));
-		listHistoricoTran.add(new HistoricoTransaccion("DOGE", "Venta", 14));
+		listHistoricoTran.add(new HistoricoTransaccion("DOGE", "Venta", 14));*/
 	}
 
+	public void setHistoricos() throws FileNotFoundException{
+		repoHistTr = new RepoHistoricoTransaccion("src/datos/transacciones/"+nombre+"_transacciones.csv");
+		repoHistUser = new RepoHistoricoUser("src/datos/historicos/"+nombre+"_historico.csv");
+		
+	}
+	
+	
+	
 	public boolean comprarCripto(int indice, RepoCriptoMercado repoCripMerc, RepoCriptoMoneda repoCripMoneda,
 			int cantidad) {
 

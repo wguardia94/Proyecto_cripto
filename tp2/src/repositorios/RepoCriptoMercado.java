@@ -1,8 +1,12 @@
 package repositorios;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
+import archivos.Archivo;
 import criptoMoneda.CriptoMercado;
+import criptoMoneda.CriptoMoneda;
 
 public class RepoCriptoMercado {
 
@@ -19,6 +23,27 @@ public class RepoCriptoMercado {
 		
 	}
 	
+	public RepoCriptoMercado(String nombreArch) throws FileNotFoundException {
+		listCriptoMercado=new ArrayList<CriptoMercado>();
+	
+		
+List<String> registros=Archivo.leer("src/datos/"+nombreArch);
+		
+		cargarLista(registros);
+
+		
+	}
+	
+	public void cargarLista(List<String> registros) {
+		listCriptoMercado = new ArrayList<CriptoMercado>();
+		for(String reg:registros) {
+			
+			String[] div=reg.split(";");
+			
+			listCriptoMercado.add(new CriptoMercado(div[0], Double.parseDouble(div[1]),div[2],div[3]));
+			
+		}
+	}
 	
 	
 	public boolean agregar(String simbolo) {

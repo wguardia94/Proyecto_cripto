@@ -1,7 +1,11 @@
 package repositorios;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
+import archivos.Archivo;
+import historico.HistoricoTransaccion;
 import historico.HistoricoUser;
 
 public class RepoHistoricoUser {
@@ -17,9 +21,29 @@ public class RepoHistoricoUser {
 		
 		
 	}
+	public RepoHistoricoUser(String path) throws FileNotFoundException {
+		listHistUser=new ArrayList<HistoricoUser>();
+		
+		List<String> registros = Archivo.leer(path);
+
+		cargarLista(registros);
+		
+		
+	}
 	
+	private void cargarLista(List<String> registros) {
+		listHistUser = new ArrayList<HistoricoUser>();
+		for (String reg : registros) {
+
+			String[] div = reg.split(";");
+
+			listHistUser.add(new HistoricoUser(div[0],Integer.parseInt(div[1])));
+			
+		}
+		
+	}
 	
-	
+
 	public boolean actualizar(String simbolo, int cantidad) {
 		
 		int ind = buscarIndicexSimbolo(simbolo);

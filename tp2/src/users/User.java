@@ -1,5 +1,6 @@
 package users;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import criptoMoneda.CriptoMercado;
@@ -39,5 +40,5 @@ public abstract class User {
 			RepoCriptoMoneda repoCmon);
 
 	public abstract String obtenerRecomendacion(RepoCriptoMercado repoCmerc, RepoCriptoMoneda repoCmon);
-
+	public abstract void setHistoricos()throws FileNotFoundException;
 }

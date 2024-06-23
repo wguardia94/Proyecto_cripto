@@ -1,9 +1,15 @@
 package repositorios;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
+import archivos.Archivo;
 import comparadores.CompararTransacciones;
 import historico.HistoricoTransaccion;
+import users.Administrador;
+import users.Trader;
+import users.User;
 
 public class RepoHistoricoTransaccion {
 
@@ -17,6 +23,46 @@ public class RepoHistoricoTransaccion {
 		listHistTr.add(new HistoricoTransaccion("DOGE", "Venta", 14));
 	}
 
+	
+	public RepoHistoricoTransaccion(String path) throws FileNotFoundException {
+		listHistTr = new ArrayList<HistoricoTransaccion>();
+
+		List<String> registros = Archivo.leer(path);
+
+		cargarLista(registros);
+		
+		
+		
+	
+	}
+	
+	public ArrayList<HistoricoTransaccion> getListHistTr() {
+		return listHistTr;
+	}
+
+
+	private void cargarLista(List<String> registros) {
+		listHistTr = new ArrayList<HistoricoTransaccion>();
+		for (String reg : registros) {
+
+			String[] div = reg.split(";");
+
+			listHistTr.add(new HistoricoTransaccion(div[0], div[1],Integer.parseInt(div[2])));
+			
+		}
+		
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+
+
 	public boolean actualizar(HistoricoTransaccion newHt) {
 
 		listHistTr.add(newHt);
@@ -24,6 +70,15 @@ public class RepoHistoricoTransaccion {
 		return true;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public ArrayList<HistoricoTransaccion> consultarHistorico() {
 
 		ArrayList<HistoricoTransaccion> aux = new ArrayList<HistoricoTransaccion>(listHistTr);

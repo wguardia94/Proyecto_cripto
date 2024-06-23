@@ -1,7 +1,10 @@
 package repositorios;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
+import archivos.Archivo;
 import comparadores.CompararXvalor;
 import criptoMoneda.CriptoMercado;
 import criptoMoneda.CriptoMoneda;
@@ -21,6 +24,31 @@ public class RepoCriptoMoneda {
 		listCriptoMoneda.add(cm1);
 		listCriptoMoneda.add(cm2);
 	}
+	
+	
+	public RepoCriptoMoneda(String nombreArch) throws FileNotFoundException {
+		
+		List<String> registros=Archivo.leer("src/datos/"+nombreArch);
+		
+		cargarLista(registros);
+		
+	}
+	
+	
+	public void cargarLista(List <String>registros) {
+		this.listCriptoMoneda = new ArrayList<CriptoMoneda>();
+		for(String reg:registros) {
+			
+			String[] div=reg.split(";");
+			
+			listCriptoMoneda.add(new CriptoMoneda(div[0], div[1],Double.parseDouble(div[2])));
+			
+		}
+		
+		
+	}
+	
+	
 
 	public boolean agregarCriptoMoneda(CriptoMoneda cm, RepoCriptoMercado repoCmerc) {
 
@@ -79,8 +107,10 @@ System.out.println("nueva en lista"+listCriptoMoneda.get(indice));
 	public String infoCripto(int indice, RepoCriptoMercado repoCripMer) {
 
 		CriptoMoneda cm = listCriptoMoneda.get(indice);
+		
+		
 		CriptoMercado cMer = repoCripMer.getCriptoMercadoXsimbolo(cm.getSimbolo());
-
+System.out.println("info es"+cMer);
 		String info = "Nombre:" + cm.getNombre() + "\t" + "Simbolo:" + cm.getSimbolo() + "\t" + "Precio en dolares:"
 				+ cm.getPrecioBase() + "\n" + "Capacidad:" + cMer.getCapacidad() + "\t" + "Volumen en ultimas 24 horas:"
 				+ cMer.getVolumen24Hs() + "\t" + "Variacion 7 ultimos dias" + cMer.getVariacion7Dias();

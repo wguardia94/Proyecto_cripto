@@ -1,5 +1,6 @@
 package users;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import criptoMoneda.CriptoMercado;
@@ -74,6 +75,12 @@ public class Administrador extends User {
 	public String obtenerRecomendacion(RepoCriptoMercado repoCmerc, RepoCriptoMoneda repoCmon) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void setHistoricos() throws FileNotFoundException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
