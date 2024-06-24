@@ -3,6 +3,8 @@ package menus;
 import java.io.IOException;
 import java.util.Scanner;
 
+import criptoMoneda.CriptoMercado;
+import criptoMoneda.CriptoMoneda;
 import historico.HistoricoUser;
 import repositorios.RepoCriptoMercado;
 import repositorios.RepoCriptoMoneda;
@@ -108,11 +110,44 @@ private void consultarCripto() {
 }
 
 private void venderCripto() {
-	user.vender(new HistoricoUser("BTC", 40), 10, repoMer, repoMon);
+	int ind=0,opcion,cantidad;
+	Scanner entrada = new Scanner(System.in);
+	System.out.println("Monedas para vender");
+	for (HistoricoUser hU : user.getHistoricoUser()) {
+		
+		System.out.println(ind + ")" + hU.getSimbolo()+"stock: "+hU.getCantidad());
+		ind++;
+		
+	}
+	System.out.println("Seleccione moneda a vender");
+	opcion=entrada.nextInt();
+	entrada.nextLine();
+	System.out.println("Ingrese cantidad a vender");
+	cantidad=entrada.nextInt();
+	entrada.nextLine();
+	
+	user.vender(user.getHistoricoUser().get(opcion), cantidad, repoMer, repoMon);
 }
 
 private void comprarCripto() {
-	user.comprarCripto(0, repoMer, repoMon, 10);
+	int ind=0,opcion;
+	
+	Scanner entrada = new Scanner(System.in);
+	CriptoMercado cmerAux;
+	CriptoMoneda cMonAux;
+	for (CriptoMoneda cm : repoMon.getListCriptoMoneda()) {
+		cmerAux=repoMer.getCriptoMercadoXsimbolo(cm.getSimbolo());
+		System.out.println(ind + ")" + cm.toString()+",Stock: "+cmerAux.getCapacidad());
+		ind++;
+	}
+	System.out.println("Seleccione moneda a comprar");
+	opcion=entrada.nextInt();
+	entrada.nextLine();
+	System.out.println("Ingrese cantidad a comprar");
+	int cantidad = entrada.nextInt();
+	entrada.nextLine();
+
+	user.comprarCripto(opcion, repoMer, repoMon, cantidad);
 	
 }
 }

@@ -5,7 +5,10 @@ public class CriptoMoneda {
 	
 	@Override
 	public String toString() {
-		return "CriptoMoneda [nombre=" + nombre + ", simbolo=" + simbolo + ", precioBase=" + precioBase + "]";
+		return "[nombre=" + nombre + ", simbolo=" + simbolo + ", precio=" + precioBase + "]";
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 	private String nombre;
 	private String simbolo;

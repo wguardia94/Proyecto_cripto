@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 import archivos.Archivo;
 import comparadores.CompararXvalor;
@@ -32,9 +33,18 @@ RepoUsers repoUsers=new RepoUsers("usuarios.csv");
 
 		
 Menu miMenu=new Menu(repoUsers,repoM,repoMerc);
+/*Scanner entrada = new Scanner(System.in);
+System.out.println("Ingrese Nombre de nueva cripto moneda");
+String nombre = entrada.nextLine();
+
+System.out.println("Ingrese simbolo de nueva cripto moneda");
+String simbolo = entrada.nextLine();
+System.out.println("Ingrese Valor en dolares de nueva cripto moneda");
+double valor = entrada.nextDouble();
 
 
-
+System.out.println(nombre+","+simbolo+","+valor);
+*/
 	//	usuario=repoUsers.getUserxInd(2);
 		//usuario.darAlta(repoM, repoMerc, new CriptoMoneda("Doge", "DG", 3500));
 		//usuario.modificarCripto(repoMerc, repoM, new CriptoMoneda("Doge", "NewDG", 200), 2);
