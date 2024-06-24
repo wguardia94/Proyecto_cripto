@@ -2,7 +2,7 @@ import users.User;
 import users.Administrador;
 import users.Trader;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +21,7 @@ import repositorios.RepoUsers;
 
 public class main {
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 User usuario;
 		
@@ -30,9 +30,11 @@ RepoCriptoMoneda repoM=new RepoCriptoMoneda("criptomonedas.csv");
 RepoUsers repoUsers=new RepoUsers("usuarios.csv");
 
 		
-		usuario=repoUsers.getUserxInd(2);
-		usuario.setHistoricos();
-		usuario.consultarHistorico();
+		usuario=repoUsers.getUserxInd(0);
+	//	usuario.setHistoricos();
+		//usuario.consultarHistorico();
+		
+		
 		//usuario=listUsers.get(2) ;
 /*
 	//System.out.println(usuario.consultarCripto(1, repoMerc, repoM)); ;

@@ -1,6 +1,7 @@
 package repositorios;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import historico.HistoricoTransaccion;
 public class RepoCriptoMoneda {
 
 	private ArrayList<CriptoMoneda> listCriptoMoneda;
-
+private String pathFile;
 	public RepoCriptoMoneda() {
 
 		this.listCriptoMoneda = new ArrayList<CriptoMoneda>();
@@ -28,7 +29,9 @@ public class RepoCriptoMoneda {
 	
 	public RepoCriptoMoneda(String nombreArch) throws FileNotFoundException {
 		
-		List<String> registros=Archivo.leer("src/datos/"+nombreArch);
+		pathFile="src/datos/"+nombreArch;
+		
+		List<String> registros=Archivo.leer(pathFile);
 		
 		cargarLista(registros);
 		
@@ -48,7 +51,23 @@ public class RepoCriptoMoneda {
 		
 	}
 	
-	
+	public void guardarArchivo() throws IOException {
+		
+		Archivo.grabar(toCsvString(),pathFile);
+			
+		}
+
+
+
+		public List<String> toCsvString() {
+			List<String>registros=new ArrayList<String>();
+			for (CriptoMoneda cm:listCriptoMoneda) {
+				
+			registros.add(cm.getNombre()+";"+cm.getSimbolo()+";"+cm.getPrecioBase());
+			}
+
+			return registros;
+		}
 
 	public boolean agregarCriptoMoneda(CriptoMoneda cm, RepoCriptoMercado repoCmerc) {
 

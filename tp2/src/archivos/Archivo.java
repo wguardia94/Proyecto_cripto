@@ -30,10 +30,14 @@ return registros;
 
 	}
 
-	public static void grabar(String linea) throws IOException {
+	public static void grabar(List<String> registros,String path) throws IOException {
 
-		PrintWriter arch = new PrintWriter(new FileWriter("salida.out"));
-		arch.println(linea);
+		PrintWriter arch = new PrintWriter(new FileWriter(path));
+		for(String linea:registros) {
+			arch.println(linea);
+		}
+		
+		
 		arch.close();
 
 	}

@@ -157,4 +157,10 @@ public class Trader extends User {
 		
 	}
 
+	@Override
+	public String toCsvString() {
+		
+		return getNombre()+";"+getNroCtaBancaria()+";"+getNombreBanco()+";"+getSaldo();
+	}
+
 }

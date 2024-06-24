@@ -1,6 +1,6 @@
 package repositorios;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class RepoCriptoMercado {
 
 	
 	private ArrayList<CriptoMercado> listCriptoMercado;
-
+private String pathFile;
 	public RepoCriptoMercado() {
 		listCriptoMercado=new ArrayList<CriptoMercado>();
 		CriptoMercado cmer1=new CriptoMercado("BTC", 8800, "30%", "+10%");
@@ -23,15 +23,15 @@ public class RepoCriptoMercado {
 		
 	}
 	
-	public RepoCriptoMercado(String nombreArch) throws FileNotFoundException {
+	public RepoCriptoMercado(String nombreArch) throws IOException {
 		listCriptoMercado=new ArrayList<CriptoMercado>();
-	
+	pathFile="src/datos/"+nombreArch;
 		
-List<String> registros=Archivo.leer("src/datos/"+nombreArch);
+List<String> registros=Archivo.leer(pathFile);
 		
 		cargarLista(registros);
 
-		
+		guardarArchivo();
 	}
 	
 	public void cargarLista(List<String> registros) {
@@ -97,12 +97,27 @@ public void modificar(String antSimbolo,CriptoMercado cmer) {
 	public void eliminar(String simbolo) {
 		
 		listCriptoMercado.remove(buscarXsimboloMercado( simbolo));
-		
-		
-		
+	
 	}
 	
 	
+public void guardarArchivo() throws IOException {
+	
+Archivo.grabar(toCsvString(),pathFile);
+	
+}
+
+
+
+public List<String> toCsvString() {
+	List<String>registros=new ArrayList<String>();
+	for (CriptoMercado cm:listCriptoMercado) {
+		
+	registros.add(cm.getSimbolo()+";"+cm.getCapacidad()+";"+cm.getVolumen24Hs()+";"+cm.getVariacion7Dias());
+	}
+
+	return registros;
+}
 
 	
 	

@@ -1,11 +1,13 @@
 package repositorios;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import archivos.Archivo;
 import comparadores.CompararTransacciones;
+import criptoMoneda.CriptoMoneda;
 import historico.HistoricoTransaccion;
 import users.Administrador;
 import users.Trader;
@@ -14,7 +16,7 @@ import users.User;
 public class RepoHistoricoTransaccion {
 
 	private ArrayList<HistoricoTransaccion> listHistTr;
-
+private String pathFile;
 	public RepoHistoricoTransaccion() {
 		listHistTr = new ArrayList<HistoricoTransaccion>();
 
@@ -26,8 +28,8 @@ public class RepoHistoricoTransaccion {
 	
 	public RepoHistoricoTransaccion(String path) throws FileNotFoundException {
 		listHistTr = new ArrayList<HistoricoTransaccion>();
-
-		List<String> registros = Archivo.leer(path);
+pathFile=path;
+		List<String> registros = Archivo.leer(pathFile);
 
 		cargarLista(registros);
 		
@@ -35,6 +37,28 @@ public class RepoHistoricoTransaccion {
 		
 	
 	}
+	
+	
+public void guardarArchivo() throws IOException {
+		
+		Archivo.grabar(toCsvString(),pathFile);
+			
+		}
+
+
+
+		public List<String> toCsvString() {
+			List<String>registros=new ArrayList<String>();
+			for (HistoricoTransaccion h:listHistTr) {
+				
+			registros.add(h.getSimbolo()+";"+h.getTipo()+";"+h.getCantidad());
+			}
+
+			return registros;
+		}
+	
+	
+	
 	
 	public ArrayList<HistoricoTransaccion> getListHistTr() {
 		return listHistTr;

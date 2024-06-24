@@ -83,4 +83,10 @@ public class Administrador extends User {
 		
 	}
 
+	@Override
+	public String toCsvString() {
+		
+		return getNombre()+";"+perfil;
+	}
+
 }

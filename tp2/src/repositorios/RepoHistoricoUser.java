@@ -1,10 +1,12 @@
 package repositorios;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import archivos.Archivo;
+import criptoMoneda.CriptoMoneda;
 import historico.HistoricoTransaccion;
 import historico.HistoricoUser;
 
@@ -13,7 +15,7 @@ public class RepoHistoricoUser {
 	
 	
 	private ArrayList<HistoricoUser> listHistUser;
-
+private String pathFile;
 	public RepoHistoricoUser() {
 		listHistUser=new ArrayList<HistoricoUser>();
 		
@@ -23,13 +25,36 @@ public class RepoHistoricoUser {
 	}
 	public RepoHistoricoUser(String path) throws FileNotFoundException {
 		listHistUser=new ArrayList<HistoricoUser>();
-		
-		List<String> registros = Archivo.leer(path);
+		pathFile=path;
+		List<String> registros = Archivo.leer(pathFile);
 
 		cargarLista(registros);
 		
 		
 	}
+	
+	
+public void guardarArchivo() throws IOException {
+		
+		Archivo.grabar(toCsvString(),pathFile);
+			
+		}
+
+
+
+		public List<String> toCsvString() {
+			List<String>registros=new ArrayList<String>();
+			for (HistoricoUser h:listHistUser) {
+				
+			registros.add(h.getSimbolo()+";"+h.getCantidad());
+			}
+
+			return registros;
+		}
+	
+	
+	
+	
 	
 	private void cargarLista(List<String> registros) {
 		listHistUser = new ArrayList<HistoricoUser>();
@@ -40,6 +65,7 @@ public class RepoHistoricoUser {
 			listHistUser.add(new HistoricoUser(div[0],Integer.parseInt(div[1])));
 			
 		}
+		
 		
 	}
 	

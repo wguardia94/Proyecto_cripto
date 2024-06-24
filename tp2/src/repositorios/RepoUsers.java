@@ -1,10 +1,12 @@
 package repositorios;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import archivos.Archivo;
+import criptoMoneda.CriptoMoneda;
 import users.Administrador;
 import users.Trader;
 import users.User;
@@ -12,17 +14,33 @@ import users.User;
 public class RepoUsers {
 
 	private ArrayList<User> listUsers;
-
+private String pathFile;
 	public RepoUsers(String nombreArch) throws FileNotFoundException {
-
-		List<String> registros = Archivo.leer("src/datos/" + nombreArch);
+pathFile="src/datos/" + nombreArch;
+		List<String> registros = Archivo.leer(pathFile);
 
 		cargarLista(registros);
 
 
 }
 
-	
+public void guardarArchivo() throws IOException {
+		
+		Archivo.grabar(toCsvString(),pathFile);
+			
+		}
+
+
+
+		public List<String> toCsvString() {
+			List<String>registros=new ArrayList<String>();
+			for (User u:listUsers) {
+				registros.add(u.toCsvString());
+
+			}
+
+			return registros;
+		}
 	
 	
 	
