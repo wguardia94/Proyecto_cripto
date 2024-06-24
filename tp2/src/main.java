@@ -17,7 +17,7 @@ import historico.HistoricoUser;
 import repositorios.RepoCriptoMercado;
 import repositorios.RepoCriptoMoneda;
 import repositorios.RepoUsers;
-
+import menus.Menu;
 
 
 public class main {
@@ -31,13 +31,17 @@ RepoCriptoMoneda repoM=new RepoCriptoMoneda("criptomonedas.csv");
 RepoUsers repoUsers=new RepoUsers("usuarios.csv");
 
 		
-		usuario=repoUsers.getUserxInd(2);
+Menu miMenu=new Menu(repoUsers,repoM,repoMerc);
+
+
+
+	//	usuario=repoUsers.getUserxInd(2);
 		//usuario.darAlta(repoM, repoMerc, new CriptoMoneda("Doge", "DG", 3500));
 		//usuario.modificarCripto(repoMerc, repoM, new CriptoMoneda("Doge", "NewDG", 200), 2);
 		//usuario.eliminarCripto(repoMerc, repoM, 2);
 		//System.out.println(usuario.consultarCripto(0, repoMerc, repoM));
 		//usuario.verMercadoActual(repoMerc);
-		usuario.setHistoricos();
+	//	usuario.setHistoricos();
 		
 		//usuario.comprarCripto(0, repoMerc, repoM, 10);
 	//	usuario.vender(new HistoricoUser("BTC", 40), 10, repoMerc, repoM);
@@ -51,12 +55,12 @@ RepoUsers repoUsers=new RepoUsers("usuarios.csv");
 		
 		
 		
-		
+	/*	
 		repoM.guardarArchivo();
 		repoMerc.guardarArchivo();
 		usuario.cerrarSesion();
 repoUsers.guardarArchivo();
-		
+	*/	
 		
 	}
 

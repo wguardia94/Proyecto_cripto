@@ -13,6 +13,10 @@ import users.User;
 
 public class RepoUsers {
 
+	public ArrayList<User> getListUsers() {
+		return listUsers;
+	}
+
 	private ArrayList<User> listUsers;
 private String pathFile;
 	public RepoUsers(String nombreArch) throws FileNotFoundException {
@@ -61,12 +65,20 @@ public void guardarArchivo() throws IOException {
 	}
 	
 	public User getUserxInd(int ind) {
-		
-		
+
 		return listUsers.get(ind);
 	}
 	
-	 
+	public User getUserxNombre(String nombre) {
+
+		for(User user:listUsers) {
+			
+			if(user.getNombre().equals(nombre))
+			return user;
+		}
+
+		return null;
+	}
 	
 
 }
