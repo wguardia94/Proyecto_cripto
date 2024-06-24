@@ -1,11 +1,13 @@
 package users;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import criptoMoneda.CriptoMercado;
 import criptoMoneda.CriptoMoneda;
 import historico.HistoricoTransaccion;
+import historico.HistoricoUser;
 import repositorios.RepoCriptoMercado;
 import repositorios.RepoCriptoMoneda;
 
@@ -65,7 +67,7 @@ public class Administrador extends User {
 	}
 
 	@Override
-	public boolean vender(int cantDisp, int cantVender, int indice, RepoCriptoMercado recoCmerc,
+	public boolean vender(HistoricoUser cmVender, int cantVender, RepoCriptoMercado recoCmerc,
 			RepoCriptoMoneda repoCmon) {
 		// TODO Auto-generated method stub
 		return false;
@@ -80,13 +82,25 @@ public class Administrador extends User {
 	@Override
 	public void setHistoricos() throws FileNotFoundException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public String toCsvString() {
+
+		return getNombre() + ";" + perfil;
+	}
+
+	@Override
+	public void cerrarSesion() throws IOException {
+		// TODO Auto-generated method stub
 		
-		return getNombre()+";"+perfil;
+	}
+
+	@Override
+	public ArrayList<HistoricoUser> getHistoricoUser() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

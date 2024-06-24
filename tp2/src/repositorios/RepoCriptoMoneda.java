@@ -14,7 +14,8 @@ import historico.HistoricoTransaccion;
 public class RepoCriptoMoneda {
 
 	private ArrayList<CriptoMoneda> listCriptoMoneda;
-private String pathFile;
+	private String pathFile;
+
 	public RepoCriptoMoneda() {
 
 		this.listCriptoMoneda = new ArrayList<CriptoMoneda>();
@@ -25,49 +26,44 @@ private String pathFile;
 		listCriptoMoneda.add(cm1);
 		listCriptoMoneda.add(cm2);
 	}
-	
-	
+
 	public RepoCriptoMoneda(String nombreArch) throws FileNotFoundException {
-		
-		pathFile="src/datos/"+nombreArch;
-		
-		List<String> registros=Archivo.leer(pathFile);
-		
+
+		pathFile = "src/datos/" + nombreArch;
+
+		List<String> registros = Archivo.leer(pathFile);
+
 		cargarLista(registros);
-		
+
 	}
-	
-	
-	public void cargarLista(List <String>registros) {
+
+	public void cargarLista(List<String> registros) {
 		this.listCriptoMoneda = new ArrayList<CriptoMoneda>();
-		for(String reg:registros) {
-			
-			String[] div=reg.split(";");
-			
-			listCriptoMoneda.add(new CriptoMoneda(div[0], div[1],Double.parseDouble(div[2])));
-			
+		for (String reg : registros) {
+
+			String[] div = reg.split(";");
+
+			listCriptoMoneda.add(new CriptoMoneda(div[0], div[1], Double.parseDouble(div[2])));
+
 		}
-		
-		
+
 	}
-	
+
 	public void guardarArchivo() throws IOException {
-		
-		Archivo.grabar(toCsvString(),pathFile);
-			
+
+		Archivo.grabar(toCsvString(), pathFile);
+
+	}
+
+	public List<String> toCsvString() {
+		List<String> registros = new ArrayList<String>();
+		for (CriptoMoneda cm : listCriptoMoneda) {
+
+			registros.add(cm.getNombre() + ";" + cm.getSimbolo() + ";" + cm.getPrecioBase());
 		}
 
-
-
-		public List<String> toCsvString() {
-			List<String>registros=new ArrayList<String>();
-			for (CriptoMoneda cm:listCriptoMoneda) {
-				
-			registros.add(cm.getNombre()+";"+cm.getSimbolo()+";"+cm.getPrecioBase());
-			}
-
-			return registros;
-		}
+		return registros;
+	}
 
 	public boolean agregarCriptoMoneda(CriptoMoneda cm, RepoCriptoMercado repoCmerc) {
 
@@ -92,14 +88,13 @@ private String pathFile;
 
 	public boolean modificarCripto(RepoCriptoMercado repoCmerc, CriptoMoneda criptoMoneda, int indice) {
 		CriptoMoneda ant = listCriptoMoneda.get(indice);
-		
+
 		listCriptoMoneda.set(indice, criptoMoneda);
-		
+
 		if (!ant.getSimbolo().equals(criptoMoneda.getSimbolo())) {
 
-		repoCmerc.modificarSimbolo(ant.getSimbolo(), criptoMoneda.getSimbolo());
+			repoCmerc.modificarSimbolo(ant.getSimbolo(), criptoMoneda.getSimbolo());
 		}
-System.out.println("nueva en lista"+listCriptoMoneda.get(indice));
 		return true;
 	}
 
@@ -126,10 +121,8 @@ System.out.println("nueva en lista"+listCriptoMoneda.get(indice));
 	public String infoCripto(int indice, RepoCriptoMercado repoCripMer) {
 
 		CriptoMoneda cm = listCriptoMoneda.get(indice);
-		
-		
+
 		CriptoMercado cMer = repoCripMer.getCriptoMercadoXsimbolo(cm.getSimbolo());
-System.out.println("info es"+cMer);
 		String info = "Nombre:" + cm.getNombre() + "\t" + "Simbolo:" + cm.getSimbolo() + "\t" + "Precio en dolares:"
 				+ cm.getPrecioBase() + "\n" + "Capacidad:" + cMer.getCapacidad() + "\t" + "Volumen en ultimas 24 horas:"
 				+ cMer.getVolumen24Hs() + "\t" + "Variacion 7 ultimos dias" + cMer.getVariacion7Dias();
@@ -166,13 +159,12 @@ System.out.println("info es"+cMer);
 		return true;
 	}
 
-	
-	public boolean realizarVenta(int cantDisp, int cantVender, int indice, RepoCriptoMercado repoCmerc	) {
+	public boolean realizarVenta(int cantDisp, int cantVender, String simbolo, RepoCriptoMercado repoCmerc) {
 
 		if (cantDisp < cantVender)
 			return false;
 
-		int indiceMercado = repoCmerc.buscarXsimboloMercado(listCriptoMoneda.get(indice).getSimbolo());
+		int indiceMercado = repoCmerc.buscarXsimboloMercado(simbolo);
 		CriptoMercado aux = repoCmerc.getCriptoMercadoIndice(indiceMercado);
 		aux.setCapacidad(aux.getCapacidad() + cantVender);
 		double auxDouble = aDouble(aux.getVariacion7Dias());
@@ -185,22 +177,15 @@ System.out.println("info es"+cMer);
 
 		return true;
 	}
-	
-	
-	
-	public CriptoMoneda darRecomendacion(RepoCriptoMercado repoCmerc) {
-					ArrayList<CriptoMoneda> aux = new ArrayList<CriptoMoneda>(listCriptoMoneda);
-			aux.sort(new CompararXvalor(repoCmerc.getListCriptoMercado()));
 
-			
-			return aux.get(0);
-		
-		
-		
+	public CriptoMoneda darRecomendacion(RepoCriptoMercado repoCmerc) {
+		ArrayList<CriptoMoneda> aux = new ArrayList<CriptoMoneda>(listCriptoMoneda);
+		aux.sort(new CompararXvalor(repoCmerc.getListCriptoMercado()));
+
+		return aux.get(0);
+
 	}
-	
-	
-	
+
 	public int encontrarXnombre(String nombre) {
 
 		for (CriptoMoneda cm : listCriptoMoneda) {
@@ -210,6 +195,18 @@ System.out.println("info es"+cMer);
 		}
 
 		return -1;
+	}
+	
+	
+	public CriptoMoneda getXSimbolo(String simbolo) {
+
+		for (CriptoMoneda cm : listCriptoMoneda) {
+			if (cm.getSimbolo().equals(simbolo))
+
+				return cm;
+		}
+
+		return null;
 	}
 
 	public double aDouble(String str) {

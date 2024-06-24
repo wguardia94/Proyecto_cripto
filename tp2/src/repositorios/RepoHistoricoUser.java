@@ -14,6 +14,12 @@ public class RepoHistoricoUser {
 
 	
 	
+	public ArrayList<HistoricoUser> getListHistUser() {
+		return listHistUser;
+	}
+
+
+
 	private ArrayList<HistoricoUser> listHistUser;
 private String pathFile;
 	public RepoHistoricoUser() {
@@ -99,6 +105,6 @@ public void guardarArchivo() throws IOException {
 		return -1;
 	}
 	
-	
+
 	
 }

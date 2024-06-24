@@ -1,6 +1,7 @@
 package users;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import comparadores.CompararTransacciones;
@@ -19,8 +20,7 @@ public class Trader extends User {
 	public int nroCtaBancaria;
 	public String nombreBanco;
 	public double saldo;
-//	public ArrayList<HistoricoUser> listHistorico = new ArrayList<HistoricoUser>();
-	//public ArrayList<HistoricoTransaccion> listHistoricoTran = new ArrayList<HistoricoTransaccion>();
+
 	public RepoHistoricoUser repoHistUser;
 	public RepoHistoricoTransaccion repoHistTr;
 
@@ -30,24 +30,17 @@ public class Trader extends User {
 		this.nombreBanco = nombreBanco;
 		this.saldo = saldo;
 
-		repoHistTr = new RepoHistoricoTransaccion();
-		repoHistUser = new RepoHistoricoUser();
+		// repoHistTr = new RepoHistoricoTransaccion();
+		// repoHistUser = new RepoHistoricoUser();
 
-	/*	listHistorico.add(new HistoricoUser("BTC", 30));
-
-		listHistoricoTran.add(new HistoricoTransaccion("BTC", "Compra", 45));
-		listHistoricoTran.add(new HistoricoTransaccion("BTC", "Venta", 15));
-		listHistoricoTran.add(new HistoricoTransaccion("DOGE", "Venta", 14));*/
 	}
 
-	public void setHistoricos() throws FileNotFoundException{
-		repoHistTr = new RepoHistoricoTransaccion("src/datos/transacciones/"+nombre+"_transacciones.csv");
-		repoHistUser = new RepoHistoricoUser("src/datos/historicos/"+nombre+"_historico.csv");
-		
+	public void setHistoricos() throws FileNotFoundException {
+		repoHistTr = new RepoHistoricoTransaccion("src/datos/transacciones/" + nombre + "_transacciones.csv");
+		repoHistUser = new RepoHistoricoUser("src/datos/historicos/" + nombre + "_historico.csv");
+
 	}
-	
-	
-	
+
 	public boolean comprarCripto(int indice, RepoCriptoMercado repoCripMerc, RepoCriptoMoneda repoCripMoneda,
 			int cantidad) {
 
@@ -60,21 +53,19 @@ public class Trader extends User {
 		repoHistUser.actualizar(cmAnt.getSimbolo(), cantidad);
 		repoHistTr.actualizar(new HistoricoTransaccion(cmAnt.getSimbolo(), "Compra", cantidad));
 
-		
 		return true;
 	}
 
-	public boolean vender(int cantDisp, int cantVender, int indice, RepoCriptoMercado recoCmerc,
+	public boolean vender(HistoricoUser cmVender, int cantVender, RepoCriptoMercado recoCmerc,
 			RepoCriptoMoneda repoCmon) {
-		CriptoMoneda aux = repoCmon.getCriptoMonedaXindice(indice);
-		repoCmon.realizarVenta(cantDisp, cantVender, indice, recoCmerc);
 
-		setSaldo(getSaldo() + cantVender *aux.getPrecioBase());
+		CriptoMoneda aux = repoCmon.getXSimbolo(cmVender.getSimbolo());
+		repoCmon.realizarVenta(cmVender.getCantidad(), cantVender, cmVender.getSimbolo(), recoCmerc);
+
+		setSaldo(getSaldo() + cantVender * aux.getPrecioBase());
 
 		repoHistUser.actualizar(aux.getSimbolo(), -cantVender);
 		repoHistTr.actualizar(new HistoricoTransaccion(aux.getSimbolo(), "Venta", cantVender));
-
-		//// actualizar archivos
 
 		return true;
 	}
@@ -87,14 +78,22 @@ public class Trader extends User {
 
 	public ArrayList<HistoricoTransaccion> consultarHistorico() {
 
-		
-		 return repoHistTr.consultarHistorico();
-		
-		
+		return repoHistTr.consultarHistorico();
 
 	}
 
+	public ArrayList<HistoricoUser> getHistoricoUser(){
+		return repoHistUser.getListHistUser();
+	}
+	
+	
+	
+	public void cerrarSesion() throws IOException {
 
+		repoHistTr.guardarArchivo();
+		repoHistUser.guardarArchivo();
+
+	}
 
 	public int getNroCtaBancaria() {
 		return nroCtaBancaria;
@@ -141,11 +140,9 @@ public class Trader extends User {
 
 	@Override
 	public String consultarCripto(int indice, RepoCriptoMercado repoCripMer, RepoCriptoMoneda repoCmon) {
-		
 
-			return repoCmon.infoCripto(indice, repoCripMer);
+		return repoCmon.infoCripto(indice, repoCripMer);
 
-		
 	}
 
 	@Override
@@ -154,13 +151,13 @@ public class Trader extends User {
 
 			System.out.println(cMerc);
 		}
-		
+
 	}
 
 	@Override
 	public String toCsvString() {
-		
-		return getNombre()+";"+getNroCtaBancaria()+";"+getNombreBanco()+";"+getSaldo();
+
+		return getNombre() + ";" + getNroCtaBancaria() + ";" + getNombreBanco() + ";" + getSaldo();
 	}
 
 }

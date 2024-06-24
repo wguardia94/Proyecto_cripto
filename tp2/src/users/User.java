@@ -1,11 +1,13 @@
 package users;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import criptoMoneda.CriptoMercado;
 import criptoMoneda.CriptoMoneda;
 import historico.HistoricoTransaccion;
+import historico.HistoricoUser;
 import repositorios.RepoCriptoMercado;
 import repositorios.RepoCriptoMoneda;
 
@@ -35,13 +37,13 @@ public abstract class User {
 
 	public abstract boolean comprarCripto(int indice, RepoCriptoMercado repoCripMerc, RepoCriptoMoneda repoCripMoneda,
 			int cantidad);
-
-	public abstract boolean vender(int cantDisp, int cantVender, int indice, RepoCriptoMercado recoCmerc,
+	public abstract ArrayList<HistoricoUser> getHistoricoUser();
+	public abstract boolean vender(HistoricoUser cmVender, int cantVender, RepoCriptoMercado recoCmerc,
 			RepoCriptoMoneda repoCmon);
 
 	public abstract String obtenerRecomendacion(RepoCriptoMercado repoCmerc, RepoCriptoMoneda repoCmon);
 	public abstract void setHistoricos()throws FileNotFoundException;
 	public abstract String toCsvString();
-	
+	public abstract void cerrarSesion() throws IOException;
 	
 }

@@ -13,6 +13,7 @@ import comparadores.CompararXvalor;
 import criptoMoneda.CriptoMercado;
 import criptoMoneda.CriptoMoneda;
 import historico.HistoricoTransaccion;
+import historico.HistoricoUser;
 import repositorios.RepoCriptoMercado;
 import repositorios.RepoCriptoMoneda;
 import repositorios.RepoUsers;
@@ -30,47 +31,31 @@ RepoCriptoMoneda repoM=new RepoCriptoMoneda("criptomonedas.csv");
 RepoUsers repoUsers=new RepoUsers("usuarios.csv");
 
 		
-		usuario=repoUsers.getUserxInd(0);
-	//	usuario.setHistoricos();
-		//usuario.consultarHistorico();
+		usuario=repoUsers.getUserxInd(2);
+		//usuario.darAlta(repoM, repoMerc, new CriptoMoneda("Doge", "DG", 3500));
+		//usuario.modificarCripto(repoMerc, repoM, new CriptoMoneda("Doge", "NewDG", 200), 2);
+		//usuario.eliminarCripto(repoMerc, repoM, 2);
+		//System.out.println(usuario.consultarCripto(0, repoMerc, repoM));
+		//usuario.verMercadoActual(repoMerc);
+		usuario.setHistoricos();
 		
-		
-		//usuario=listUsers.get(2) ;
-/*
-	//System.out.println(usuario.consultarCripto(1, repoMerc, repoM)); ;
-		usuario.darAlta(repoM, repoMerc, new CriptoMoneda("Doge", "DG", 3200));
-		
-	//usuario.modificarCripto(repoMerc, repoM, new CriptoMoneda("Bitcoin", "NewBTC", 3200), 0);
-		usuario.eliminarCripto(repoMerc, repoM, 0);
-		System.out.println(usuario.consultarCripto(0, repoMerc, repoM));
+		//usuario.comprarCripto(0, repoMerc, repoM, 10);
+	//	usuario.vender(new HistoricoUser("BTC", 40), 10, repoMerc, repoM);
+	//	System.out.println(	usuario.obtenerRecomendacion(repoMerc, repoM));
 	
-	*/
-		
-	//	usuario.comprarCripto(0, repoMerc, repoM, 10);
-		//System.out.println(usuario);
-		/*usuario=listUsers.get(2) ;
-		usuario.verMercadoActual(repoMerc);
-		*/
-	//	usuario.vender(30, 10, 0, repoMerc, repoM);
-	//	usuario.consultarHistorico();
-		//System.out.println(usuario.obtenerRecomendacion(repoMerc, repoM));
 		
 		
-		//Archivo arch=new Archivo();
-		
-		
-	/*	List <String> lista=Archivo.leer("src/datos/criptomonedas.csv");
-		
-		for(String s:lista) {
-			System.out.println(s);
-		}*/
-		
-	//	System.out.println(repoM.getCriptoMonedaXindice(0));
-		
-	//	System.out.println(usuario.consultarCripto(0, repoMerc, repoM));
+		//usuario.consultarHistorico();
+			
+			
 		
 		
 		
+		
+		repoM.guardarArchivo();
+		repoMerc.guardarArchivo();
+		usuario.cerrarSesion();
+repoUsers.guardarArchivo();
 		
 		
 	}
