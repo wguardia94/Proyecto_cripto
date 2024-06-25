@@ -92,9 +92,12 @@ public class MenuAdministrador {
 
 		System.out.println("Ingrese cual cripto moneda desea consultar");
 		opcion = entrada.nextInt();
-
-		System.out.println(user.consultarCripto(opcion, repoMer, repoMon));
-
+		entrada.nextLine();
+		
+		if (opcion >= 0 && opcion < ind + 1)
+			System.out.println(user.consultarCripto(opcion, repoMer, repoMon));
+		else
+			System.out.println("Ingreso erroneo");
 	}
 
 	private void eliminarCriptoMoneda() {
@@ -109,7 +112,13 @@ public class MenuAdministrador {
 		System.out.println("Ingrese cual cripto moneda desea eliminar");
 		opcion = entrada.nextInt();
 		entrada.nextLine();
-		user.eliminarCripto(repoMer, repoMon, opcion);
+
+		if (opcion >= 0 && opcion < ind + 1) {
+			if (user.eliminarCripto(repoMer, repoMon, opcion))
+				;
+			System.out.println("Se elimino la cripto moneda exitosamente");
+		} else
+			System.out.println("Ingreso erroneo");
 
 	}
 
@@ -127,43 +136,48 @@ public class MenuAdministrador {
 		System.out.println("Ingrese cual cripto moneda desea modificar");
 		opcion = entrada.nextInt();
 
-		cmAux = repoMon.getCriptoMonedaXindice(opcion);
+		if (opcion >= 0 && opcion< ind + 1) {
+			cmAux = repoMon.getCriptoMonedaXindice(opcion);
 
-		do {
-			System.out.println("¿Que desea modificar?");
+			do {
+				System.out.println("¿Que desea modificar?");
 
-			System.out.println("1)Nombre");
-			System.out.println("2)Simbolo");
-			System.out.println("3)Precio");
-			System.out.println("0)SALIR");
-			opcion = entrada.nextInt();
-			entrada.nextLine();
-			switch (opcion) {
-			case 1:
-				System.out.println("Ingrese nuevo nombre");
-				strAux = entrada.nextLine();
-				cmAux.setNombre(strAux);
-				break;
-			case 2:
-				System.out.println("Ingrese nuevo simbolo");
-				strAux = entrada.nextLine();
-				cmAux.setSimbolo(strAux);
-				break;
-			case 3:
-				System.out.println("Ingrese nuevo precio");
-				dAux = entrada.nextInt();
+				System.out.println("1)Nombre");
+				System.out.println("2)Simbolo");
+				System.out.println("3)Precio");
+				System.out.println("0)SALIR");
+				opcion = entrada.nextInt();
 				entrada.nextLine();
-				cmAux.setPrecioBase(dAux);
-				break;
-			case 0:
-				break;
-			default:
-				System.out.println("La opcion ingresada no es válida");
-			}
+				switch (opcion) {
+				case 1:
+					System.out.println("Ingrese nuevo nombre");
+					strAux = entrada.nextLine();
+					cmAux.setNombre(strAux);
+					break;
+				case 2:
+					System.out.println("Ingrese nuevo simbolo");
+					strAux = entrada.nextLine();
+					cmAux.setSimbolo(strAux);
+					break;
+				case 3:
+					System.out.println("Ingrese nuevo precio");
+					dAux = entrada.nextInt();
+					entrada.nextLine();
+					cmAux.setPrecioBase(dAux);
+					break;
+				case 0:
+					break;
+				default:
+					System.out.println("La opcion ingresada no es válida");
+				}
 
-		} while (opcion != 0);
-		
-		user.modificarCripto(repoMer, repoMon, cmAux, opcion);
+			} while (opcion != 0);
+
+			user.modificarCripto(repoMer, repoMon, cmAux, opcion);
+
+			System.out.println("Se modifico la cripto moneda exitosamente");
+		} else
+			System.out.println("Ingreso erroneo");
 
 	}
 
@@ -179,8 +193,9 @@ public class MenuAdministrador {
 		System.out.println("Ingrese Valor en dolares de nueva cripto moneda");
 		double valor = entrada.nextDouble();
 		entrada.nextLine();
-		//entrada.close();
+
 		user.darAlta(repoMon, repoMer, new CriptoMoneda(nombre, simbolo, valor));
+		System.out.println("Se creo la moneda exitosamente");
 
 	}
 }

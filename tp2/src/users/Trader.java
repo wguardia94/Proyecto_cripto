@@ -45,7 +45,10 @@ public class Trader extends User {
 			int cantidad) {
 
 		CriptoMoneda cmAnt = repoCripMoneda.getCriptoMonedaXindice(indice);
-		repoCripMoneda.realizarCompra(repoCripMerc, cantidad, indice);
+		
+		if((saldo>=cantidad * cmAnt.getPrecioBase())&&repoCripMoneda.realizarCompra(repoCripMerc, cantidad, indice))
+		
+		{
 		setSaldo(getSaldo() - cantidad * cmAnt.getPrecioBase());
 
 		/// actualizarHistorico
@@ -53,21 +56,31 @@ public class Trader extends User {
 		repoHistUser.actualizar(cmAnt.getSimbolo(), cantidad);
 		repoHistTr.actualizar(new HistoricoTransaccion(cmAnt.getSimbolo(), "Compra", cantidad));
 
-		return true;
+		return true;	
+		}
+
+		return false;
 	}
 
 	public boolean vender(HistoricoUser cmVender, int cantVender, RepoCriptoMercado recoCmerc,
 			RepoCriptoMoneda repoCmon) {
 
-		CriptoMoneda aux = repoCmon.getXSimbolo(cmVender.getSimbolo());
-		repoCmon.realizarVenta(cmVender.getCantidad(), cantVender, cmVender.getSimbolo(), recoCmerc);
+		if (cantVender <= cmVender.getCantidad()) {
 
-		setSaldo(getSaldo() + cantVender * aux.getPrecioBase());
+			CriptoMoneda aux = repoCmon.getXSimbolo(cmVender.getSimbolo());
+			repoCmon.realizarVenta(cmVender.getCantidad(), cantVender, cmVender.getSimbolo(), recoCmerc);
 
-		repoHistUser.actualizar(aux.getSimbolo(), -cantVender);
-		repoHistTr.actualizar(new HistoricoTransaccion(aux.getSimbolo(), "Venta", cantVender));
+			setSaldo(getSaldo() + cantVender * aux.getPrecioBase());
 
-		return true;
+			repoHistUser.actualizar(aux.getSimbolo(), -cantVender);
+			repoHistTr.actualizar(new HistoricoTransaccion(aux.getSimbolo(), "Venta", cantVender));
+
+			return true;
+
+		}
+
+		return false;
+
 	}
 
 	public String obtenerRecomendacion(RepoCriptoMercado repoCmerc, RepoCriptoMoneda repoCmon) {
@@ -82,12 +95,10 @@ public class Trader extends User {
 
 	}
 
-	public ArrayList<HistoricoUser> getHistoricoUser(){
+	public ArrayList<HistoricoUser> getHistoricoUser() {
 		return repoHistUser.getListHistUser();
 	}
-	
-	
-	
+
 	public void cerrarSesion() throws IOException {
 
 		repoHistTr.guardarArchivo();

@@ -20,8 +20,9 @@ public class Menu {
 	public ArrayList<User> listaUser;
 	public RepoCriptoMercado repoMer;
 	public RepoCriptoMoneda repoMon;
-
+public RepoUsers repoUsers;
 	public Menu(RepoUsers repoUsers, RepoCriptoMoneda repoMon, RepoCriptoMercado repoMer) throws IOException {
+		this.repoUsers=repoUsers;
 		this.listaUser = repoUsers.getListUsers();
 		this.repoMer = repoMer;
 		this.repoMon = repoMon;
@@ -86,6 +87,7 @@ public class Menu {
 		}
 
 		System.out.println("Saliendo del Programa Menu");
+		repoUsers.guardarArchivo();
 		entradaMenu.close();
 
 	}

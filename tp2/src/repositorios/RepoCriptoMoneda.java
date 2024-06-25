@@ -136,27 +136,29 @@ public class RepoCriptoMoneda {
 		CriptoMoneda cm = getCriptoMonedaXindice(indice);
 
 		CriptoMercado cMer = repoCripMer.getCriptoMercadoXsimbolo(cm.getSimbolo());
-		cMer.setCapacidad(cMer.getCapacidad() - cantidad);
 
-		double antVal = aDouble(cMer.getVariacion7Dias());
-		cMer.setVariacion7Dias("+" + antVal * 1.05 + "%");
+		if (cantidad <= cMer.getCapacidad()) {
+			cMer.setCapacidad(cMer.getCapacidad() - cantidad);
+			double antVal = aDouble(cMer.getVariacion7Dias());
+			cMer.setVariacion7Dias("+" + antVal * 1.05 + "%");
+			antVal = aDouble(cMer.getVolumen24Hs());
+			cMer.setVolumen24Hs("+" + antVal * 1.05 + "%");
+			repoCripMer.modificar(cMer.getSimbolo(), cMer);
+			
+			if (cantidad > 1000) {
+				antVal = cm.getPrecioBase();
+				cm.setPrecioBase(antVal * 1.1);
+				listCriptoMoneda.set(indice, cm);
 
-		antVal = aDouble(cMer.getVolumen24Hs());
-		cMer.setVolumen24Hs("+" + antVal * 1.05 + "%");
-		repoCripMer.modificar(cMer.getSimbolo(), cMer);
+			}
 
-		//// cambiar archivp mercado
-
-		if (cantidad > 1000) {
-			antVal = cm.getPrecioBase();
-			cm.setPrecioBase(antVal * 1.1);
-			listCriptoMoneda.set(indice, cm);
-
-			// cambiar archivo cripto
+			return true;
 
 		}
 
-		return true;
+		else
+			return false;
+
 	}
 
 	public boolean realizarVenta(int cantDisp, int cantVender, String simbolo, RepoCriptoMercado repoCmerc) {
@@ -196,8 +198,7 @@ public class RepoCriptoMoneda {
 
 		return -1;
 	}
-	
-	
+
 	public CriptoMoneda getXSimbolo(String simbolo) {
 
 		for (CriptoMoneda cm : listCriptoMoneda) {
