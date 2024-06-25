@@ -21,7 +21,7 @@ public class Menu {
 		this.repoUsers = repoUsers;
 		this.repoMer = repoMer;
 		this.repoMon = repoMon;
-		mostrarMenuInicio();
+		
 
 	}
 
@@ -34,7 +34,7 @@ public class Menu {
 		System.out.println("-----------------------");
 		System.out.println("Ingrese el Usuario");
 		userName = entradaMenu.nextLine();
-		System.out.println("Su ingreso es: " + userName);
+		System.out.println("El usuario ingresado es: " + userName);
 
 		User user = repoUsers.getUserxNombre(userName);
 		if (user != null) {
@@ -51,23 +51,25 @@ public class Menu {
 		}
 
 		else {
-			System.out.println("No se encontro el usuario");
+			System.out.println("No se encontro el usuario, se creara uno con el nombre: "+userName);
 
 			do {
-				System.out.println("¿que desea crear?");
+				System.out.println("¿que tipo de usuario desea crear?");
 				System.out.println("1) Administrador");
 				System.out.println("2) Trader");
-				System.out.println("3) Salir");
+				System.out.println("3) Salir/no crear");
 				opcion = entradaMenu.nextInt();
 				entradaMenu.nextLine();
 				switch (opcion) {
 				case 1:
 					System.out.println("Crearemos un Administrador");
-					crearAdministrador();
+					crearAdministrador(userName);
+					opcion=3;//para salir luego de crear usuario
 					break;
 				case 2:
 					System.out.println("Crearemos un Trader");
-					crearTrader();
+					crearTrader(userName);
+					opcion=3;
 					break;
 				case 3:
 					System.out.println("Saliendo del Menu");
@@ -84,14 +86,14 @@ public class Menu {
 
 	}
 
-	private void crearTrader() throws IOException {
-		String nombreNew, nombreBanco;
+	private void crearTrader(String username) throws IOException {
+		String nombreBanco;
 		int nroCuenta;
 		double saldo;
 		Scanner entrada = new Scanner(System.in);
-		System.out.println("Ingrese nombre del nuevo trader");
+		/*System.out.println("Ingrese nombre del nuevo trader");
 		nombreNew = entrada.nextLine();
-
+*/
 		System.out.println("Ingrese nombre del banco del nuevo trader");
 		nombreBanco = entrada.nextLine();
 		System.out.println("Ingrese nro de cuenta del nuevo trader");
@@ -101,17 +103,17 @@ public class Menu {
 		saldo = entrada.nextDouble();
 		entrada.nextLine();
 
-		repoUsers.agregarUsuario(new Trader(nombreNew, nroCuenta, nombreBanco, saldo));
+		repoUsers.agregarUsuario(new Trader(username, nroCuenta, nombreBanco, saldo));
 		System.out.println("Trader creado con exito");
 
 	}
 
-	private void crearAdministrador() throws IOException {
-		Scanner entrada = new Scanner(System.in);
+	private void crearAdministrador(String userName) throws IOException {
+		/*Scanner entrada = new Scanner(System.in);
 		System.out.println("Ingrese nombre del nuevo administrador");
 		String nombreNew = entrada.nextLine();
-
-		repoUsers.agregarUsuario(new Administrador(nombreNew, "administrador"));
+*/
+		repoUsers.agregarUsuario(new Administrador(userName, "administrador"));
 		System.out.println("Administrador creado con exito");
 
 	}

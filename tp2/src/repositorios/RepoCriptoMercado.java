@@ -46,7 +46,7 @@ public class RepoCriptoMercado {
 	}
 
 	public boolean agregar(String simbolo) {
-		listCriptoMercado.add(new CriptoMercado(simbolo, 500, "+1%", "+1%"));
+		listCriptoMercado.add(new CriptoMercado(simbolo, 500, "1%", "+1%"));
 
 		return true;
 	}

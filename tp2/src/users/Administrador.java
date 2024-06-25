@@ -103,4 +103,10 @@ public class Administrador extends User {
 		return null;
 	}
 
+	@Override
+	public double getSaldo() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

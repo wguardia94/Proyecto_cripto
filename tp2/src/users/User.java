@@ -44,6 +44,7 @@ public abstract class User {
 	public abstract String obtenerRecomendacion(RepoCriptoMercado repoCmerc, RepoCriptoMoneda repoCmon);
 	public abstract void setHistoricos()throws FileNotFoundException;
 	public abstract String toCsvString();
+	public abstract double getSaldo();
 	public abstract void cerrarSesion() throws IOException;
 	
 }

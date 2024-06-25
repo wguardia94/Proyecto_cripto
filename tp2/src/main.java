@@ -33,7 +33,7 @@ RepoUsers repoUsers=new RepoUsers("usuarios.csv");
 
 		
 Menu miMenu=new Menu(repoUsers,repoM,repoMerc);
-		
+		miMenu.mostrarMenuInicio();
 	}
-
+////los cambios en los archivos se realizan al salir/cerrar sesion
 }

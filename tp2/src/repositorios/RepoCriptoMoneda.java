@@ -87,13 +87,14 @@ public class RepoCriptoMoneda {
 	}
 
 	public boolean modificarCripto(RepoCriptoMercado repoCmerc, CriptoMoneda criptoMoneda, int indice) {
-		CriptoMoneda ant = listCriptoMoneda.get(indice);
-
+		//CriptoMoneda ant = listCriptoMoneda.get(indice);
+		String antSimb = listCriptoMoneda.get(indice).getSimbolo();
+	System.out.println("ant es "+antSimb+"; nuevo es "+criptoMoneda.getSimbolo());	
 		listCriptoMoneda.set(indice, criptoMoneda);
 
-		if (!ant.getSimbolo().equals(criptoMoneda.getSimbolo())) {
+		if (!antSimb.equals(criptoMoneda.getSimbolo())) {
 
-			repoCmerc.modificarSimbolo(ant.getSimbolo(), criptoMoneda.getSimbolo());
+			repoCmerc.modificarSimbolo(antSimb, criptoMoneda.getSimbolo());
 		}
 		return true;
 	}

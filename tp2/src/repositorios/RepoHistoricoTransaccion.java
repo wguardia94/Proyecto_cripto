@@ -95,14 +95,6 @@ public void guardarArchivo() throws IOException {
 	}
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	public ArrayList<HistoricoTransaccion> consultarHistorico() {
 
 		ArrayList<HistoricoTransaccion> aux = new ArrayList<HistoricoTransaccion>(listHistTr);

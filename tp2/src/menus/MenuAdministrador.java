@@ -137,7 +137,7 @@ public class MenuAdministrador {
 		opcion = entrada.nextInt();
 
 		if (opcion >= 0 && opcion< ind + 1) {
-			cmAux = repoMon.getCriptoMonedaXindice(opcion);
+			cmAux = new CriptoMoneda(repoMon.getCriptoMonedaXindice(opcion)) ;
 
 			do {
 				System.out.println("¿Que desea modificar?");

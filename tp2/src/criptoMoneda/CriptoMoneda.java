@@ -3,13 +3,7 @@ package criptoMoneda;
 public class CriptoMoneda {
 
 	
-	@Override
-	public String toString() {
-		return "[nombre=" + nombre + ", simbolo=" + simbolo + ", precio=" + precioBase + "]";
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+	
 	private String nombre;
 	private String simbolo;
 	private double precioBase;
@@ -19,6 +13,16 @@ public class CriptoMoneda {
 		this.simbolo = simbolo;
 		this.precioBase = precioBase;
 	}
+	
+	
+	public CriptoMoneda(CriptoMoneda cm) {
+		this.nombre = cm.nombre;
+	this.simbolo = cm.simbolo;
+	this.precioBase = cm.precioBase;
+}
+	
+	
+	
 	
 	
 	public String getSimbolo() {
@@ -37,7 +41,13 @@ public class CriptoMoneda {
 		return nombre;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "[nombre=" + nombre + ", simbolo=" + simbolo + ", precio=" + precioBase + "]";
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 	
 	
 	
