@@ -1,5 +1,6 @@
 package repositorios;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,4 +82,25 @@ public void guardarArchivo() throws IOException {
 	}
 	
 
+	public boolean agregarUsuario(User user) throws IOException {
+	
+		listUsers.add(user);
+		
+		if(user.getClass().getSimpleName().equalsIgnoreCase("trader"))
+		crearArchivosHistoricos(user.getNombre());
+		
+		return true;
+	}
+	
+	
+	private void crearArchivosHistoricos(String nombre) throws IOException {
+		File archTransacciones = new File ("src/datos/transacciones/" + nombre + "_transacciones.csv");
+		File archHistorico = new File ("src/datos/historicos/" + nombre + "_historico.csv");
+		archHistorico.createNewFile();
+		archTransacciones.createNewFile();
+		
+	}
+	
+	
+	
 }

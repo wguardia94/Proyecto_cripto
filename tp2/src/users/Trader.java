@@ -1,5 +1,6 @@
 package users;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,10 +31,13 @@ public class Trader extends User {
 		this.nombreBanco = nombreBanco;
 		this.saldo = saldo;
 
+	
 		// repoHistTr = new RepoHistoricoTransaccion();
 		// repoHistUser = new RepoHistoricoUser();
 
 	}
+
+
 
 	public void setHistoricos() throws FileNotFoundException {
 		repoHistTr = new RepoHistoricoTransaccion("src/datos/transacciones/" + nombre + "_transacciones.csv");

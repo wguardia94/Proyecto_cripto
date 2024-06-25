@@ -12,11 +12,11 @@ import users.User;
 
 public class MenuAdministrador {
 	private int numero;
-	private Administrador user;
+	private User user;
 	private RepoCriptoMercado repoMer;
 	private RepoCriptoMoneda repoMon;
 
-	public MenuAdministrador(Administrador user, RepoCriptoMercado repoMer, RepoCriptoMoneda repoMon)
+	public MenuAdministrador(User user, RepoCriptoMercado repoMer, RepoCriptoMoneda repoMon)
 			throws IOException {
 		this.user = user;
 		this.repoMer = repoMer;

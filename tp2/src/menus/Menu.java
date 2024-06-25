@@ -13,17 +13,13 @@ import users.Trader;
 import users.User;
 
 public class Menu {
-	public String usuario;
-
-	public int i = 0;
 	public int salida = 0;
-	public ArrayList<User> listaUser;
 	public RepoCriptoMercado repoMer;
 	public RepoCriptoMoneda repoMon;
-public RepoUsers repoUsers;
+	public RepoUsers repoUsers;
+
 	public Menu(RepoUsers repoUsers, RepoCriptoMoneda repoMon, RepoCriptoMercado repoMer) throws IOException {
-		this.repoUsers=repoUsers;
-		this.listaUser = repoUsers.getListUsers();
+		this.repoUsers = repoUsers;
 		this.repoMer = repoMer;
 		this.repoMon = repoMon;
 		mostrarMenuInicio();
@@ -31,51 +27,47 @@ public RepoUsers repoUsers;
 	}
 
 	public void mostrarMenuInicio() throws IOException {
-
+		String userName;
 		Scanner entradaMenu = new Scanner(System.in);
+		int opcion;
 		System.out.println("Menú principal");
 		System.out.println("-----------------------");
 		System.out.println("Ingrese el Usuario");
-		this.usuario = entradaMenu.nextLine();
-		System.out.println("Su ingreso es: " + this.usuario);
+		userName = entradaMenu.nextLine();
+		System.out.println("Su ingreso es: " + userName);
 
-		Administrador A1;
-		for (; this.i < listaUser.size() && this.salida == 0; ++this.i) {
-			PrintStream var10000 = System.out;
-			Object var10001 = listaUser.get(this.i);
-			var10000.println("por aca" + ((User) var10001).getNombre());
-			
-			if (this.usuario.compareTo(((User) listaUser.get(this.i)).getNombre()) == 0) {
-				A1 = new Administrador(((User) listaUser.get(this.i)).getNombre(), "Administrador");
-				System.out.println("evaluo" + A1.getNombre());
-				if (((User) listaUser.get(this.i)).getClass().getSimpleName().equalsIgnoreCase("administrador")) {
-					new MenuAdministrador(A1,repoMer,repoMon);
-					this.salida = 1;
-				} else {
-					User trader=listaUser.get(this.i);
-					new MenuTrader(trader,repoMer,repoMon);
-					this.salida = 1;
-				}
+		User user = repoUsers.getUserxNombre(userName);
+		if (user != null) {
+
+			if (user.getClass().getSimpleName().equalsIgnoreCase("administrador")) {
+				new MenuAdministrador(user, repoMer, repoMon);
+
+			} else {
+
+				new MenuTrader(user, repoMer, repoMon);
+
 			}
+
 		}
 
-		if (this.salida == 0) {
+		else {
+			System.out.println("No se encontro el usuario");
+
 			do {
 				System.out.println("¿que desea crear?");
 				System.out.println("1) Administrador");
 				System.out.println("2) Trader");
 				System.out.println("3) Salir");
-				this.salida = entradaMenu.nextInt();
-				switch (this.salida) {
+				opcion = entradaMenu.nextInt();
+				entradaMenu.nextLine();
+				switch (opcion) {
 				case 1:
-					System.out.println("Crearemos un Administrador LLamado" + this.usuario);
-					A1 = new Administrador(this.usuario, "Administrador");
-					listaUser.add(A1);
+					System.out.println("Crearemos un Administrador");
+					crearAdministrador();
 					break;
 				case 2:
 					System.out.println("Crearemos un Trader");
-					User T1 = new Trader(this.usuario, 6789, "Banco Nacion", 500500.0D);
-					listaUser.add(T1);
+					crearTrader();
 					break;
 				case 3:
 					System.out.println("Saliendo del Menu");
@@ -83,12 +75,44 @@ public RepoUsers repoUsers;
 				default:
 					System.out.println("El numero ingresado no es válido");
 				}
-			} while (this.salida != 3);
+			} while (opcion != 3);
 		}
 
 		System.out.println("Saliendo del Programa Menu");
 		repoUsers.guardarArchivo();
 		entradaMenu.close();
+
+	}
+
+	private void crearTrader() throws IOException {
+		String nombreNew, nombreBanco;
+		int nroCuenta;
+		double saldo;
+		Scanner entrada = new Scanner(System.in);
+		System.out.println("Ingrese nombre del nuevo trader");
+		nombreNew = entrada.nextLine();
+
+		System.out.println("Ingrese nombre del banco del nuevo trader");
+		nombreBanco = entrada.nextLine();
+		System.out.println("Ingrese nro de cuenta del nuevo trader");
+		nroCuenta = entrada.nextInt();
+		entrada.nextLine();
+		System.out.println("Ingrese saldo del nuevo trader");
+		saldo = entrada.nextDouble();
+		entrada.nextLine();
+
+		repoUsers.agregarUsuario(new Trader(nombreNew, nroCuenta, nombreBanco, saldo));
+		System.out.println("Trader creado con exito");
+
+	}
+
+	private void crearAdministrador() throws IOException {
+		Scanner entrada = new Scanner(System.in);
+		System.out.println("Ingrese nombre del nuevo administrador");
+		String nombreNew = entrada.nextLine();
+
+		repoUsers.agregarUsuario(new Administrador(nombreNew, "administrador"));
+		System.out.println("Administrador creado con exito");
 
 	}
 

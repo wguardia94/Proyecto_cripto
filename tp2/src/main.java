@@ -33,44 +33,6 @@ RepoUsers repoUsers=new RepoUsers("usuarios.csv");
 
 		
 Menu miMenu=new Menu(repoUsers,repoM,repoMerc);
-/*Scanner entrada = new Scanner(System.in);
-System.out.println("Ingrese Nombre de nueva cripto moneda");
-String nombre = entrada.nextLine();
-
-System.out.println("Ingrese simbolo de nueva cripto moneda");
-String simbolo = entrada.nextLine();
-System.out.println("Ingrese Valor en dolares de nueva cripto moneda");
-double valor = entrada.nextDouble();
-
-
-System.out.println(nombre+","+simbolo+","+valor);
-*/
-	//	usuario=repoUsers.getUserxInd(2);
-		//usuario.darAlta(repoM, repoMerc, new CriptoMoneda("Doge", "DG", 3500));
-		//usuario.modificarCripto(repoMerc, repoM, new CriptoMoneda("Doge", "NewDG", 200), 2);
-		//usuario.eliminarCripto(repoMerc, repoM, 2);
-		//System.out.println(usuario.consultarCripto(0, repoMerc, repoM));
-		//usuario.verMercadoActual(repoMerc);
-	//	usuario.setHistoricos();
-		
-		//usuario.comprarCripto(0, repoMerc, repoM, 10);
-	//	usuario.vender(new HistoricoUser("BTC", 40), 10, repoMerc, repoM);
-	//	System.out.println(	usuario.obtenerRecomendacion(repoMerc, repoM));
-	
-		
-		
-		//usuario.consultarHistorico();
-			
-			
-		
-		
-		
-	/*	
-		repoM.guardarArchivo();
-		repoMerc.guardarArchivo();
-		usuario.cerrarSesion();
-repoUsers.guardarArchivo();
-	*/	
 		
 	}
 
