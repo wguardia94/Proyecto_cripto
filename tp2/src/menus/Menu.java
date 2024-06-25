@@ -1,8 +1,7 @@
 package menus;
 
 import java.io.IOException;
-import java.io.PrintStream;
-import java.util.ArrayList;
+
 import java.util.Scanner;
 
 import repositorios.RepoCriptoMercado;
@@ -30,6 +29,7 @@ public class Menu {
 		String userName;
 		Scanner entradaMenu = new Scanner(System.in);
 		int opcion;
+
 		System.out.println("Menú principal");
 		System.out.println("-----------------------");
 		System.out.println("Ingrese el Usuario");

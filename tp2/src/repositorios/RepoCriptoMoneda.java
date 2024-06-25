@@ -140,14 +140,14 @@ public class RepoCriptoMoneda {
 		if (cantidad <= cMer.getCapacidad()) {
 			cMer.setCapacidad(cMer.getCapacidad() - cantidad);
 			double antVal = aDouble(cMer.getVariacion7Dias());
-			cMer.setVariacion7Dias("+" + antVal * 1.05 + "%");
+			cMer.setVariacion7Dias("+" + Math.round((antVal * 1.05)*100.0)/100.0 + "%");
 			antVal = aDouble(cMer.getVolumen24Hs());
-			cMer.setVolumen24Hs("+" + antVal * 1.05 + "%");
+			cMer.setVolumen24Hs(Math.round((antVal * 1.05)*100.0)/100.0 + "%");
 			repoCripMer.modificar(cMer.getSimbolo(), cMer);
 			
 			if (cantidad > 1000) {
 				antVal = cm.getPrecioBase();
-				cm.setPrecioBase(antVal * 1.1);
+				cm.setPrecioBase(Math.round(((antVal * 1.1)*100.0)/100.0));
 				listCriptoMoneda.set(indice, cm);
 
 			}
@@ -170,10 +170,10 @@ public class RepoCriptoMoneda {
 		CriptoMercado aux = repoCmerc.getCriptoMercadoIndice(indiceMercado);
 		aux.setCapacidad(aux.getCapacidad() + cantVender);
 		double auxDouble = aDouble(aux.getVariacion7Dias());
-		String auxStr = "+" + auxDouble * 0.93 + "%";
+		String auxStr = "+" +Math.round((auxDouble* 0.93)*100.0)/100.0   + "%";
 		aux.setVariacion7Dias(auxStr);
 		auxDouble = aDouble(aux.getVolumen24Hs());
-		auxStr = auxDouble * 0.93 + "%";
+		auxStr =Math.round((auxDouble * 0.93)*100.0)/100.0  + "%";
 		aux.setVolumen24Hs(auxStr);
 		repoCmerc.modificar(aux.getSimbolo(), aux);
 

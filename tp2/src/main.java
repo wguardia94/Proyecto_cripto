@@ -1,4 +1,4 @@
-import users.User;
+
 import users.Administrador;
 import users.Trader;
 
@@ -25,7 +25,7 @@ public class main {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-User usuario;
+
 		
 RepoCriptoMercado repoMerc=new RepoCriptoMercado("mercados.csv");
 RepoCriptoMoneda repoM=new RepoCriptoMoneda("criptomonedas.csv");
