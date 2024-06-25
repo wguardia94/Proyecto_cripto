@@ -45,7 +45,7 @@ public class MenuTrader {
 			this.numero = entrada.nextInt();
 			switch (this.numero) {
 			case 1:
-				System.out.println("Se está comprando cripto, saldo actual: "+user.getSaldo());
+				System.out.println("Se está comprando cripto, saldo actual: " + user.getSaldo());
 				comprarCripto();
 				break;
 			case 2:
@@ -132,28 +132,32 @@ public class MenuTrader {
 			ind++;
 
 		}
-		
-		do {
-			System.out.println("Seleccione moneda a vender");
-			opcion = entrada.nextInt();
-			entrada.nextLine();
-		
-		if(opcion<0||opcion>=ind) {
-			System.out.println("Ingrese una opcion valida");
-		}
-		} while (opcion<0||opcion>=ind);
-		
-		
-		
-		
-		System.out.println("Ingrese cantidad a vender");
-		cantidad = entrada.nextInt();
-		entrada.nextLine();
+		if (ind == 0) {
 
-		if (user.vender(user.getHistoricoUser().get(opcion), cantidad, repoMer, repoMon))
-			System.out.println("Se vendio exitosamente");
-		else
-			System.out.println("No se pudo realizar la venta");
+			System.out.println("No posee cripto monedas en su inventario para vender");
+
+		} else {
+
+			do {
+				System.out.println("Seleccione moneda a vender");
+				opcion = entrada.nextInt();
+				entrada.nextLine();
+
+				if (opcion < 0 || opcion >= ind) {
+					System.out.println("Ingrese una opcion valida");
+				}
+			} while (opcion < 0 || opcion >= ind);
+
+			System.out.println("Ingrese cantidad a vender");
+			cantidad = entrada.nextInt();
+			entrada.nextLine();
+
+			if (user.vender(user.getHistoricoUser().get(opcion), cantidad, repoMer, repoMon))
+				System.out.println("Se vendio exitosamente");
+			else
+				System.out.println("No se pudo realizar la venta");
+
+		}
 
 	}
 
@@ -168,19 +172,17 @@ public class MenuTrader {
 			System.out.println(ind + ")" + cm.toString() + ",Stock: " + cmerAux.getCapacidad());
 			ind++;
 		}
-		
-		
+
 		do {
 			System.out.println("Seleccione moneda a comprar ");
-		opcion = entrada.nextInt();
-		entrada.nextLine();
-		
-		if(opcion<0||opcion>=ind) {
-			System.out.println("Ingrese una opcion valida");
-		}
-		} while (opcion<0||opcion>=ind);
-		
-		
+			opcion = entrada.nextInt();
+			entrada.nextLine();
+
+			if (opcion < 0 || opcion >= ind) {
+				System.out.println("Ingrese una opcion valida");
+			}
+		} while (opcion < 0 || opcion >= ind);
+
 		System.out.println("Ingrese cantidad a comprar");
 		int cantidad = entrada.nextInt();
 		entrada.nextLine();
