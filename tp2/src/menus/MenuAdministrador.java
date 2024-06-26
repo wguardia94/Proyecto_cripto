@@ -123,7 +123,7 @@ public class MenuAdministrador {
 	}
 
 	private void modificarCriptoMoneda() {
-		int ind = 0, opcion;
+		int ind = 0,indiceMoneda, opcion;
 		double dAux;
 		Scanner entrada = new Scanner(System.in);
 		CriptoMoneda cmAux;
@@ -135,7 +135,7 @@ public class MenuAdministrador {
 
 		System.out.println("Ingrese cual cripto moneda desea modificar");
 		opcion = entrada.nextInt();
-
+indiceMoneda=opcion;
 		if (opcion >= 0 && opcion< ind + 1) {
 			cmAux = new CriptoMoneda(repoMon.getCriptoMonedaXindice(opcion)) ;
 
@@ -173,7 +173,7 @@ public class MenuAdministrador {
 
 			} while (opcion != 0);
 
-			user.modificarCripto(repoMer, repoMon, cmAux, opcion);
+			user.modificarCripto(repoMer, repoMon, cmAux, indiceMoneda);
 
 			System.out.println("Se modifico la cripto moneda exitosamente");
 		} else
